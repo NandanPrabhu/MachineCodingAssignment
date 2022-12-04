@@ -27,19 +27,25 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List {
-                    ForEach(output.movies, id: \.id) { movie in
-                        MovieView(movie: movie)
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        ForEach(output.movies, id: \.id) { movie in
+                            MovieView(movie: movie)
+                                .padding(EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2))
+                                .cornerRadius(12)
+                        }
                     }
                 }
-                Image(systemName: "folder.badge.plus")
-                    .resizable()
-                    .frame(width: 60, height: 50)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .onTapGesture {
-                        // open Add to playlist view
-                    }
+                Group {
+                    Image(systemName: "folder.badge.plus")
+                        .resizable()
+                        .frame(width: 60, height: 50, alignment: .bottom)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .onTapGesture {
+                            addItem()
+                        }
+                }
             }
             .navigationBarTitle(Text("Popular movies"))
             .onAppear {
